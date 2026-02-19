@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  backend:
+    build: Backend
+    hostname: backend-host
+    volumes:
+      - ./Backend:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - Akash
+  
+  frontend:
+    build: Frontend
+    hostname: frontend-host
+    volumes:
+      - ./Frontend:/app
+    environment:
+      - BACKEND_URL=http://backend:8000
+    ports:
+      - "3000:3000"
+    links:
+      - backend
+    depends_on:
+      - backend
+    networks:
+      - Akash
+
+networks:
+  Akash: {}
+
+    
